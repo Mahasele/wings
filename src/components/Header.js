@@ -15,8 +15,10 @@ function Header() {
       <div className="header-actions">
         <nav className="nav-links">
           {
-          !auth?.accessToken && <button className="sign-in"><Link to='/login'>Login</Link></button>
-          }
+          !auth?.accessToken && <>
+          <button className="sign-in"><Link to='/login'>Login</Link></button>
+          <button className="sign-in"><Link to='/register'>Register</Link></button>
+          </>}
         </nav>
       </div>
     </header>

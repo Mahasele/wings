@@ -9,6 +9,7 @@ import { Route, Routes } from 'react-router-dom';
 import Auth from './components/Auth';
 import Users from './components/Users';
 import Products from './components/Products';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route index element={<Banner />}/>
         <Route path='/login' element={<Loginform/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route element={<Auth/>}>
           <Route path='dashboard' element={<Dashboard/>}/>
           <Route path='products' element={<Products/>}/>
