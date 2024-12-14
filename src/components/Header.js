@@ -7,8 +7,8 @@ import useAuth from '../hooks/use-auth';
 function Header() {
   const {auth} = useAuth()
   return (
-    <header className="header">
-      <div className="logo">WingsCafe</div>
+    <header className="header" style={auth.accessToken ?{position:'fixed',top:0,left:0,right:0}:{}}>
+      <Link to={'/'}><div className="logo">WingsCafe</div></Link>
       <nav className="nav-links">
         
       </nav>

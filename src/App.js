@@ -10,19 +10,27 @@ import Auth from './components/Auth';
 import Users from './components/Users';
 import Products from './components/Products';
 import Register from './components/Register';
+import Guest from './components/Guest';
+import UserProfile from './components/Profile';
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route index element={<Banner />}/>
-        <Route path='/login' element={<Loginform/>}/>
-        <Route path='/register' element={<Register/>}/>
+        
+        <Route element={<Guest/>}>
+          <Route index element={<Banner />}/>
+          <Route path='' element={<Banner />}/>
+          <Route path='/' element={<Banner />}/>
+          <Route path='/login' element={<Loginform/>}/>
+          <Route path='/register' element={<Register/>}/>
+        </Route>
         <Route element={<Auth/>}>
-          <Route path='dashboard' element={<Dashboard/>}/>
-          <Route path='products' element={<Products/>}/>
-          <Route path='users' element={<Users/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/products' element={<Products/>}/>
+          <Route path='/profile' element={<UserProfile/>}/>
+          <Route path='/users' element={<Users/>}/>
         </Route>
 
       </Routes>

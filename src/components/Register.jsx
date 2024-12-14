@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
 import axios from '../api/axios';
-import useAuth from '../hooks/use-auth';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [email, seEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const {setAuth} = useAuth()
   const navigate = useNavigate()
   const handleSubmit = async(e)=>{
     e.preventDefault()
+    setError('')
+    setLoading(true)
     try {
        const res = await axios.post('/register',{name,email,password}) 
-
        navigate('/login')
     } catch (error) {
-        console.log(error)
+        if(!error?.response) {
+          setError('No Response from the Server')
+        } else if(error?.response?.status) {
+          setError(error?.response?.data)
+        } else {
+          setError('Failed to register')
+        }
+    } finally {
+        setLoading(false)
     }
     
   }
@@ -37,7 +46,8 @@ export default function Register() {
                     <label for="password">Password</label>
                     <input type="password" id="password" value={password} required onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
-                <button type="submit" className="btn">Register</button>
+                <button type="submit" className="btn">{loading?'Registering...':'Register'}</button>
+                {error && <p style={{color:'#e74c3c'}}>{error}</p>}
             </form>
         </div>
     </div>

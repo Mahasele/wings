@@ -1,9 +1,12 @@
+import useAuth from "../hooks/use-auth"
 import useFetchData from "../hooks/useFetchData"
+import stringFormat from "../utils/format"
 
 export default function Dashboard() {
-    const product = useFetchData('/products')
-    const total = product.data.reduce((a,b)=>a+b.price,0)
-    const lowStock = product.data.filter(pro=>pro.quantity <10).length
+    const {user} = useAuth()
+    const products = useFetchData('/products/'+user?.userId,[user])
+    const total = products.data.reduce((a,b)=>a+(Number(b.price)*Number(b.quantity)),0)
+    const lowStock = products.data.filter(pro=>pro.quantity <10).length
   return (
     <div id="dashboard-page">
 
@@ -13,7 +16,7 @@ export default function Dashboard() {
               <div className="dashboard-grid">
                   <div className="dashboard-card">
                       <h3>Total Products</h3>
-                      <p id="total-products">{product?.data?.length || 0}</p>
+                      <p id="total-products">{products?.data?.length || 0}</p>
                   </div>
                   <div className="dashboard-card">
                       <h3>Low Stock Products</h3>
@@ -21,7 +24,7 @@ export default function Dashboard() {
                   </div>
                   <div className="dashboard-card">
                       <h3>Total Stock Value</h3>
-                      <p id="total-stock-value">M{total}</p>
+                      <p id="total-stock-value">M{stringFormat(total.toFixed(2))}</p>
                   </div>
               </div>
           </div>

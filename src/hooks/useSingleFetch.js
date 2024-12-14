@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import useAxiosIntercepters from './useAxiosIntercepters';
 import useAuth from './use-auth';
 
-function useFetchData(url,dep=[]) {
-  const [data, setData] = useState([]);
+function useSingleFetch(url,dep=[]) {
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error,setError] = useState()
   const axios = useAxiosIntercepters()
-  const {auth} =useAuth()
+  const {auth,setUser} =useAuth()
   useEffect(()=>{
         let mounted = true;
         const controller = new AbortController()
@@ -19,18 +19,13 @@ function useFetchData(url,dep=[]) {
                         withCredentials:true
                     })
                     mounted && setData(res.data)
-                    
+                    mounted && setUser(res.data)
+                   mounted && setLoading(false) 
                 }catch(err) {
-                    if(!error?.response) {
-                    setError('No Response from the Server')
-                    } else if(error?.response?.status) {
-                    setError(error?.response?.data)
-                    } else {
-                    setError(error.message)
-                    }
-                } finally {
+                    setError(err)
                     setLoading(false)
-                }      
+                }
+                
             }
             getData()
         }
@@ -42,4 +37,4 @@ function useFetchData(url,dep=[]) {
     return {data,loading,error}
 }
 
-export default useFetchData
+export default useSingleFetch

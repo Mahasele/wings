@@ -37,6 +37,8 @@ code {
 }
 .main {
   margin-left: 250px;
+  padding-top: 80px;
+  padding-bottom: 30px;
 }
 .sidebar {
   width: 250px;
@@ -71,9 +73,25 @@ code {
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
+#logout{
+  color: var(--white);
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-.sidebar-menu a:hover {
+.sidebar-menu a:hover, #logout {
   background-color: var(--secondary-color);
+}
+#logout:hover {
+  background-color: #3498dbbd;
 }
 
 .main-content {
